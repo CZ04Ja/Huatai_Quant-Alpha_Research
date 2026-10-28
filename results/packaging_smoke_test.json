@@ -1,0 +1,8 @@
+{
+  "run_date": "2026-10-29",
+  "result": {
+    "synthetic": true,
+    "max_control_inner_product": 1.1144156342607427e-14,
+    "scope": "Cross-sectional OLS neutralization illustration, NOT full Barra risk model"
+  }
+}

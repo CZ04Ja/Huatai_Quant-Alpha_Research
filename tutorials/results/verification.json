@@ -1,0 +1,43 @@
+{
+  "data_type": "SYNTHETIC EDUCATIONAL ONLY",
+  "rows": 7680,
+  "months": 96,
+  "test_rank_ic": 0.040118898786268696,
+  "metrics": {
+    "train": {
+      "CAGR": 0.10363386413234266,
+      "annual_vol": 0.1439111876881696,
+      "sharpe_rf0": 0.7576193365923105,
+      "max_drawdown": -0.14304242539220302
+    },
+    "holdout": {
+      "CAGR": 0.05248543877887801,
+      "annual_vol": 0.13535483528277273,
+      "sharpe_rf0": 0.44369448173164233,
+      "max_drawdown": -0.15512421591310477
+    },
+    "benchmark_holdout": {
+      "CAGR": 0.037663585143812295,
+      "annual_vol": 0.12887722082503938,
+      "sharpe_rf0": 0.3491837542298775,
+      "max_drawdown": -0.17776456529107698
+    }
+  },
+  "checks_passed": [
+    "future_label_not_in_features",
+    "point_in_time",
+    "initial_entry_turnover",
+    "positive_cost_drag",
+    "compound_NAV",
+    "initial_drawdown",
+    "rolling_beta_lag"
+  ],
+  "limitations": [
+    "synthetic planted signal",
+    "fixed survivor universe",
+    "no real trading restrictions",
+    "generic business-day calendar",
+    "simplified costs",
+    "not historical Huatai output"
+  ]
+}

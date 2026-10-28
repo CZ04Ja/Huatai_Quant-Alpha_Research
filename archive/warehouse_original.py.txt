@@ -1,0 +1,314 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jul 18 10:54:24 2024
+
+"""
+
+#读取数据
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
+font = FontProperties(fname='/System/Library/Fonts/STHeiti Light.ttc') 
+
+# Load the data from the Excel file using openpyxl
+data = pd.read_excel("/LOCAL_HOME/Documents/期货.xlsx", engine='openpyxl', usecols=[0, 1, 2],names=['Open','Inventory','Dates'])
+data['Date'] = pd.to_datetime(data['Dates'])
+data.set_index('Date', inplace=True)
+print(data['Inventory'])
+
+#做空做多信号
+# Generate trading signals based on changes in inventory
+data['Inventory_Change'] = data['Inventory'].diff()
+data['Signal'] = 0  # Default to holding position
+
+# Short when inventory increases
+data.loc[data['Inventory_Change'] > 0, 'Signal'] = -1
+
+# Long when inventory decreases
+data.loc[data['Inventory_Change'] < 0, 'Signal'] = 1
+print(data.index)
+print(data.index.is_unique)
+print(data.index.is_monotonic_increasing)
+
+cost = (data['Signal'] - data['Signal'].shift(1)).apply(abs)* 0.0003
+print(cost)
+
+pnl = data['Signal'] * (data['Open'].shift(-2) - data['Open'].shift(-1))/  data['Open'].shift(-1)
+pnl = pnl - cost
+pnl.cumsum().plot()
+print(data['Signal'])
+
+
+equity_curve = pd.DataFrame()
+equity_curve['PNL'] = pnl
+equity_curve['DrawDown'] = pnl.cumsum().cummax() - pnl.cumsum()
+equity_curve['Equity'] = pnl.cumsum().fillna(method='ffill').fillna(0)
+mdd = equity_curve['DrawDown'].max()
+
+# Plot equity curve and drawdown with secondary y-axis
+fig, ax1 = plt.subplots(figsize=(12, 6))
+
+# Plot equity curve
+ax1.plot(equity_curve.index, equity_curve['Equity'], label='累计收益', color='blue')
+ax1.set_xlabel('时间')
+ax1.set_ylabel('累计收益', color='blue')
+ax1.tick_params(axis='y', labelcolor='blue')
+ax1.legend(loc='upper left', prop=font)
+
+# Create secondary y-axis for drawdown
+ax2 = ax1.twinx()
+ax2.fill_between(equity_curve.index, 0, -equity_curve['DrawDown'], color='red', alpha=0.3, label='回撤')
+ax2.set_ylabel('回撤', color='red')
+ax2.tick_params(axis='y', labelcolor='black')
+ax2.legend(loc='upper right', prop=font)
+
+plt.title('Equity of Zn')
+plt.show()
+
+
+# Calculate performance metrics
+total_return = equity_curve['Equity'].iloc[-1]
+annualized_return = pnl.mean() * 252
+annualized_volatility = pnl.std() * np.sqrt(252)
+sharpe_ratio = annualized_return / annualized_volatility
+calmar_ratio = annualized_return / mdd
+
+print(f"总收益率: {total_return*100:.2f}%")
+print(f"年化收益率: {annualized_return*100:.2f}%")
+print(f"最大回撤: {mdd * 100:.2f}%")
+print(f"年化波动率: {annualized_volatility * 100:.2f}%")
+print(f"夏普比率: {sharpe_ratio:.2f}")
+print(f"卡玛比率: {calmar_ratio:.2f}")
+print(data.describe()) 
+print(pnl)
+#%%
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
+font = FontProperties(fname='/System/Library/Fonts/STHeiti Light.ttc') 
+
+# Load the data from the Excel file using openpyxl
+data = pd.read_excel("/LOCAL_HOME/Documents/期货.xlsx", engine='openpyxl', usecols=[4,5,6],names=['Open','Inventory','Dates'])
+data['Date'] = pd.to_datetime(data['Dates'])
+data.set_index('Date', inplace=True)
+#做空做多信号
+# Generate trading signals based on changes in inventory
+data['Inventory_Change'] = data['Inventory'].diff()
+data['Signal'] = 0  # Default to holding position
+
+# Short when inventory increases
+data.loc[data['Inventory_Change'] > 0, 'Signal'] = -1
+
+# Long when inventory decreases
+data.loc[data['Inventory_Change'] < 0, 'Signal'] = 1
+print(data.index)
+print(data.index.is_unique)
+print(data.index.is_monotonic_increasing)
+
+cost = (data['Signal'] - data['Signal'].shift(1)).apply(abs)* 0.0003
+cost
+
+pnl = data['Signal'] * (data['Open'].shift(-2) - data['Open'].shift(-1))/  data['Open'].shift(-1)
+pnl = pnl - cost
+pnl.cumsum().plot()
+
+
+equity_curve = pd.DataFrame()
+equity_curve['PNL'] = pnl
+equity_curve['DrawDown'] = pnl.cumsum().cummax() - pnl.cumsum()
+equity_curve['Equity'] = pnl.cumsum().fillna(method='ffill').fillna(0)
+mdd = equity_curve['DrawDown'].max()
+
+# Plot equity curve and drawdown with secondary y-axis
+fig, ax1 = plt.subplots(figsize=(12, 6))
+
+# Plot equity curve
+ax1.plot(equity_curve.index, equity_curve['Equity'], label='累计收益', color='blue')
+ax1.set_xlabel('时间')
+ax1.set_ylabel('累计收益', color='blue')
+ax1.tick_params(axis='y', labelcolor='blue')
+ax1.legend(loc='upper left', prop=font)
+
+# Create secondary y-axis for drawdown
+ax2 = ax1.twinx()
+ax2.fill_between(equity_curve.index, 0, -equity_curve['DrawDown'], color='red', alpha=0.3, label='回撤')
+ax2.set_ylabel('回撤', color='red')
+ax2.tick_params(axis='y', labelcolor='black')
+ax2.legend(loc='upper right', prop=font)
+
+plt.title('Equity of Cu')
+plt.show()
+
+
+# Calculate performance metrics
+total_return = equity_curve['Equity'].iloc[-1]
+annualized_return = pnl.mean() * 252
+annualized_volatility = pnl.std() * np.sqrt(252)
+sharpe_ratio = annualized_return / annualized_volatility
+calmar_ratio = annualized_return / mdd
+
+print(f"总收益率: {total_return*100:.2f}%")
+print(f"年化收益率: {annualized_return*100:.2f}%")
+print(f"最大回撤: {mdd * 100:.2f}%")
+print(f"年化波动率: {annualized_volatility * 100:.2f}%")
+print(f"夏普比率: {sharpe_ratio:.2f}")
+print(f"卡玛比率: {calmar_ratio:.2f}")
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
+font = FontProperties(fname='/System/Library/Fonts/STHeiti Light.ttc') 
+
+# Load the data from the Excel file using openpyxl
+data = pd.read_excel("/LOCAL_HOME/Documents/期货.xlsx", engine='openpyxl', usecols=[4, 5, 6],names=['Open','Inventory','Dates'])
+data['Date'] = pd.to_datetime(data['Dates'])
+data.set_index('Date', inplace=True)
+print(data['Inventory'])
+
+#做空做多信号
+# Generate trading signals based on changes in inventory
+data['Inventory_Change'] = data['Inventory'].diff()
+data['Signal'] = 0  # Default to holding position
+
+# Short when inventory increases
+data.loc[data['Inventory_Change'] > 0, 'Signal'] = -1
+
+# Long when inventory decreases
+data.loc[data['Inventory_Change'] < 0, 'Signal'] = 1
+print(data.index)
+print(data.index.is_unique)
+print(data.index.is_monotonic_increasing)
+
+cost = (data['Signal'] - data['Signal'].shift(1)).apply(abs)* 0.0003
+print(cost)
+
+pnl = data['Signal'] * (data['Open'].shift(-2) - data['Open'].shift(-1))/  data['Open'].shift(-1)
+pnl = pnl - cost
+pnl.cumsum().plot()
+print(data['Signal'])
+
+
+equity_curve = pd.DataFrame()
+equity_curve['PNL'] = pnl
+equity_curve['DrawDown'] = pnl.cumsum().cummax() - pnl.cumsum()
+equity_curve['Equity'] = pnl.cumsum().fillna(method='ffill').fillna(0)
+mdd = equity_curve['DrawDown'].max()
+
+# Plot equity curve and drawdown with secondary y-axis
+fig, ax1 = plt.subplots(figsize=(12, 6))
+
+# Plot equity curve
+ax1.plot(equity_curve.index, equity_curve['Equity'], label='累计收益', color='blue')
+ax1.set_xlabel('时间')
+ax1.set_ylabel('累计收益', color='blue')
+ax1.tick_params(axis='y', labelcolor='blue')
+ax1.legend(loc='upper left', prop=font)
+
+# Create secondary y-axis for drawdown
+ax2 = ax1.twinx()
+ax2.fill_between(equity_curve.index, 0, -equity_curve['DrawDown'], color='red', alpha=0.3, label='回撤')
+ax2.set_ylabel('回撤', color='red')
+ax2.tick_params(axis='y', labelcolor='black')
+ax2.legend(loc='upper right', prop=font)
+
+plt.title('Equity of Cu')
+plt.show()
+
+
+# Calculate performance metrics
+total_return = equity_curve['Equity'].iloc[-1]
+annualized_return = pnl.mean() * 252
+annualized_volatility = pnl.std() * np.sqrt(252)
+sharpe_ratio = annualized_return / annualized_volatility
+calmar_ratio = annualized_return / mdd
+
+print(f"总收益率: {total_return*100:.2f}%")
+print(f"年化收益率: {annualized_return*100:.2f}%")
+print(f"最大回撤: {mdd * 100:.2f}%")
+print(f"年化波动率: {annualized_volatility * 100:.2f}%")
+print(f"夏普比率: {sharpe_ratio:.2f}")
+print(f"卡玛比率: {calmar_ratio:.2f}")
+print(data.describe()) 
+print(pnl)
+#%%
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
+font = FontProperties(fname='/System/Library/Fonts/STHeiti Light.ttc') 
+
+# Load the data from the Excel file using openpyxl
+data = pd.read_excel("/LOCAL_HOME/Documents/期货.xlsx", engine='openpyxl', usecols=[0,1,2],names=['Open','Inventory','Dates'])
+data['Date'] = pd.to_datetime(data['Dates'])
+data.set_index('Date', inplace=True)
+print(data['Inventory'])
+
+#做空做多信号
+# Generate trading signals based on changes in inventory
+data['Inventory_Change'] = data['Inventory'].diff()
+data['Signal'] = 0  # Default to holding position
+
+# Short when inventory increases
+data.loc[data['Inventory_Change'] > 0, 'Signal'] = -1
+
+# Long when inventory decreases
+data.loc[data['Inventory_Change'] < 0, 'Signal'] = 1
+print(data.index)
+print(data.index.is_unique)
+print(data.index.is_monotonic_increasing)
+
+cost = (data['Signal'] - data['Signal'].shift(1)).apply(abs)* 0.0003
+print(cost)
+
+pnl = data['Signal'] * (data['Open'].shift(-2) - data['Open'].shift(-1))/  data['Open'].shift(-1)
+pnl = pnl - cost
+pnl.cumsum().plot()
+print(data['Signal'])
+
+
+equity_curve = pd.DataFrame()
+equity_curve['PNL'] = pnl
+equity_curve['DrawDown'] = pnl.cumsum().cummax() - pnl.cumsum()
+equity_curve['Equity'] = pnl.cumsum().fillna(method='ffill').fillna(0)
+mdd = equity_curve['DrawDown'].max()
+
+# Plot equity curve and drawdown with secondary y-axis
+fig, ax1 = plt.subplots(figsize=(12, 6))
+
+# Plot equity curve
+ax1.plot(equity_curve.index, equity_curve['Equity'], label='累计收益', color='blue')
+ax1.set_xlabel('时间')
+ax1.set_ylabel('累计收益', color='blue')
+ax1.tick_params(axis='y', labelcolor='blue')
+ax1.legend(loc='upper left', prop=font)
+
+# Create secondary y-axis for drawdown
+ax2 = ax1.twinx()
+ax2.fill_between(equity_curve.index, 0, -equity_curve['DrawDown'], color='red', alpha=0.3, label='回撤')
+ax2.set_ylabel('回撤', color='red')
+ax2.tick_params(axis='y', labelcolor='black')
+ax2.legend(loc='upper right', prop=font)
+
+plt.title('Equity of Ag')
+plt.show()
+
+
+# Calculate performance metrics
+total_return = equity_curve['Equity'].iloc[-1]
+annualized_return = pnl.mean() * 252
+annualized_volatility = pnl.std() * np.sqrt(252)
+sharpe_ratio = annualized_return / annualized_volatility
+calmar_ratio = annualized_return / mdd
+
+print(f"总收益率: {total_return*100:.2f}%")
+print(f"年化收益率: {annualized_return*100:.2f}%")
+print(f"最大回撤: {mdd * 100:.2f}%")
+print(f"年化波动率: {annualized_volatility * 100:.2f}%")
+print(f"夏普比率: {sharpe_ratio:.2f}")
+print(f"卡玛比率: {calmar_ratio:.2f}")
+print(data.describe()) 
+print(pnl)

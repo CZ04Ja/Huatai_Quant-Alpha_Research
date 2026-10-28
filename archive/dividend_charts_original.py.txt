@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Aug 27 17:03:04 2024
+
+@author: charliezhang
+"""
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.dates as mdates
+
+zzhl_data = pd.read_csv('/LOCAL_HOME/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/71d0c7adb76458c975d5129b96dcf84b/Message/MessageTemp/5488ce2d2c9964c8115e0d6f2201aa17/File/中证红利_PE-TTM_市值加权_上市以来_20240827_162115.csv',index_col=0)
+hs300_data = pd.read_csv('/LOCAL_HOME/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/71d0c7adb76458c975d5129b96dcf84b/Message/MessageTemp/5488ce2d2c9964c8115e0d6f2201aa17/File/idx000300new.csv',index_col=0)
+
+zzhl_data.index = pd.to_datetime(zzhl_data.index, format='%Y/%m/%d', errors='coerce')
+hs300_data.index = pd.to_datetime(hs300_data.index, format='%Y%m%d', errors='coerce')
+
+start_date = '2012-08-31'
+zzhl_data = zzhl_data.loc[start_date:]
+hs300_data = hs300_data.loc[start_date:]
+
+# 计算每日收益率，并删除空值
+zzhl_data['zzhl_return'] = zzhl_data['收盘点位'].pct_change().dropna()
+hs300_data['hs300_return'] = hs300_data['idx000300'].pct_change().dropna()
+
+# 将中证红利和沪深300按日期合并
+merged_data = pd.merge(zzhl_data[['zzhl_return']], hs300_data[['hs300_return']], left_index=True, right_index=True)
+
+# 设置滚动窗口为5年，假设每年有250个交易日，所以5年约为1250个交易日
+window_size = 1250
+
+# 计算5年期的滚动波动率（年化）
+merged_data['zzhl_volatility_5yr'] = merged_data['zzhl_return'].rolling(window_size).std() * (window_size ** 0.5)
+merged_data['hs300_volatility_5yr'] = merged_data['hs300_return'].rolling(window_size).std() * (window_size ** 0.5)
+
+# 绘制5年期的滚动波动率对比图
+plt.figure(figsize=(12, 6))
+plt.plot(merged_data.index, merged_data['zzhl_volatility_5yr'], label='5-Year Rolling Volatility - Dividend Index', color='orange')
+plt.plot(merged_data.index, merged_data['hs300_volatility_5yr'], label='5-Year Rolling Volatility - CSI 300 Index', color='blue')
+
+# 设置标题和标签
+plt.title('5-Year Rolling Volatility Comparison: Dividend Index vs. CSI 300', fontsize=14)
+plt.xlabel('Date', fontsize=12)
+plt.ylabel('Volatility (Annualized)', fontsize=12)
+
+# 调整日期格式和显示间隔
+plt.gca().xaxis.set_major_locator(mdates.AutoDateLocator())
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+
+# 自动旋转日期以避免重叠
+plt.gcf().autofmt_xdate()
+
+# 显示图例
+plt.legend()
+
+# 添加网格线
+plt.grid(True)
+
+# 显示图表
+plt.tight_layout()
+plt.show()
+
+#%%
+hs300_data = pd.read_csv('/LOCAL_HOME/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/71d0c7adb76458c975d5129b96dcf84b/Message/MessageTemp/5488ce2d2c9964c8115e0d6f2201aa17/File/idx000300new.csv',index_col=0)
+hs300_data.index = pd.to_datetime(hs300_data.index, format='%Y%m%d', errors='coerce')
+start_date = '2012-08-31'
+
+hs300_data = hs300_data.loc[start_date:]
+hs300_data['hs300_return'] = hs300_data['idx000300'].pct_change().dropna()
+hs300_data['hs300_return'].cumsum().plot()

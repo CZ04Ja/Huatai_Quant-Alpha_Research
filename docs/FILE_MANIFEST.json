@@ -1,0 +1,112 @@
+[
+  {
+    "path": ".gitignore",
+    "bytes": 119,
+    "sha256": "3cf8c52406b8c76da8fa1704151c37373527516f3d1b8eb458eab5b6df7ebfef"
+  },
+  {
+    "path": "README.md",
+    "bytes": 1948,
+    "sha256": "90bfc70f41379fba2ccb12315fbecfdd8fb0abe66477b647f1657311d7b101c6"
+  },
+  {
+    "path": "archive/barra_original.py.txt",
+    "bytes": 990,
+    "sha256": "bab26877cacb29542ab30baa40e0daee2c47fae101a063bf3de7dbb834a9751c"
+  },
+  {
+    "path": "archive/dividend_charts_original.py.txt",
+    "bytes": 3241,
+    "sha256": "6fea295042c50ec56a74e80596262ae4f539b556b3b4ec8360368e96fe76c945"
+  },
+  {
+    "path": "archive/dividend_report_text.txt",
+    "bytes": 7579,
+    "sha256": "7ddcbc7b641dc4d9340d0758caf16254949668233de1d32b67acc0a99c3064bd"
+  },
+  {
+    "path": "archive/warehouse_original.py.txt",
+    "bytes": 10734,
+    "sha256": "594717d1e612b8b86eeeef85386f57cf0b9823cd34ef407681be111600c3cb4b"
+  },
+  {
+    "path": "docs/DATA_POLICY.md",
+    "bytes": 1030,
+    "sha256": "ad61149bedd5fe09a5b1af161755d335b6bf7f87a9fa68b8d593f24e18e9f909"
+  },
+  {
+    "path": "docs/PROVENANCE.json",
+    "bytes": 2512,
+    "sha256": "25149a046e2363281c5c0c29afdc0d1a98fdaff81153f2bf4a871db12fe1eeae"
+  },
+  {
+    "path": "requirements.txt",
+    "bytes": 64,
+    "sha256": "8a9bb091acbbfffe054b7fc01d5584bf7be86caac5d15808aa5591749aaebc86"
+  },
+  {
+    "path": "results/archived_audit.json",
+    "bytes": 930,
+    "sha256": "b3ae2521a1b0d5458d1d03fd1a70b26937d83b09d9bf31fea524f6b614dd7901"
+  },
+  {
+    "path": "src/dividend_learning.py",
+    "bytes": 1553,
+    "sha256": "8aa6adb53f0cdb80ab7e4a93402008af51987a1e4b3a3805ce028b0a983994b0"
+  },
+  {
+    "path": "src/reproduce.py",
+    "bytes": 2780,
+    "sha256": "f751214257b56d5f4981b15c2f74ada98cc631e2ae8f91d3bebc5cfbb6550ff9"
+  },
+  {
+    "path": "tutorials/Factor_Research_Tutorial_CN.ipynb",
+    "bytes": 136681,
+    "sha256": "d447cdca393093076c05c896ce0b6bd88824290c9a51ee32f6d29ed22c3a4c4f"
+  },
+  {
+    "path": "tutorials/factor_research_tutorial.py",
+    "bytes": 21978,
+    "sha256": "3a06ff763d7cdb9379606850ae6073a2379864e263a4166f96d67525cc836fa0"
+  },
+  {
+    "path": "tutorials/results/nav.png",
+    "bytes": 58236,
+    "sha256": "2693db17c627e1dd6bbdf8c33541890ba65bdf38fefb2e9c3c29e4f07d47e8ea"
+  },
+  {
+    "path": "tutorials/results/quintiles.png",
+    "bytes": 14646,
+    "sha256": "02eb4370915fd52112c5dbca34ad4103980e7dbbcf831ceeb275680470a93414"
+  },
+  {
+    "path": "tutorials/results/synthetic_ablation.csv",
+    "bytes": 892,
+    "sha256": "f258fb80b531d2b383d2eb266861ad61cb4a92358f253aea938e732e4b933364"
+  },
+  {
+    "path": "tutorials/results/synthetic_backtest.csv",
+    "bytes": 11108,
+    "sha256": "682e4dc54e705f9044c55ee9f33b78c4158f42f626dbf568b0e296c3f3e8c5f9"
+  },
+  {
+    "path": "tutorials/results/synthetic_cross_section_coefficients.csv",
+    "bytes": 15457,
+    "sha256": "9b572ee8a5667fb34caf8ca696dba48222fd110d4d8d85d48903399dbd8e310e"
+  },
+  {
+    "path": "tutorials/results/synthetic_stock_month_panel.csv",
+    "bytes": 2886798,
+    "sha256": "1596c72ca02d0054a5287d1d19ae178497e59f37ad6c3f1dcf9a416ddbc80a9b"
+  },
+  {
+    "path": "tutorials/results/verification.json",
+    "bytes": 1121,
+    "sha256": "3a5816bf6f521952c442c794e173e162d09f3010557619cfbf2964484fdf4a7d"
+  },
+  {
+    "path": "tutorials/量化因子研究完整复习.md",
+    "bytes": 15979,
+    "sha256": "1fe63c9c3e8527b997ad9313bb31b8579e29cc3535836c2a88b4ac5e7100b901"
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "audit_date": "2026-10-22",
+  "not_rerun_during_packaging": true,
+  "results": {
+    "factor": {
+      "synthetic": true,
+      "max_control_inner_product": 1.1144156342607427e-14,
+      "scope": "Cross-sectional OLS neutralization illustration, NOT full Barra risk model"
+    },
+    "warehouse": {
+      "kind": "Source schema audit; performance calculation intentionally blocked",
+      "rows": 2433,
+      "first_three_headers": [
+        "Inventory",
+        "Open",
+        "Dates"
+      ],
+      "original_script_interpretation": [
+        "Open",
+        "Inventory",
+        "Dates"
+      ],
+      "schema_match": false,
+      "nonpositive_first_column": 210,
+      "decision": "Confirm instrument, price field, inventory definition and release timestamp before rerunning."
+    },
+    "metrics_test": {
+      "initial_capital_in_drawdown": true,
+      "five_year_vs_annual_vol_multiplier": 2.23606797749979
+    }
+  }
+}
