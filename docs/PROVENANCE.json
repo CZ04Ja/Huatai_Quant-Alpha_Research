@@ -1,0 +1,55 @@
+{
+  "packaged_on": "2026-10-29",
+  "entries": [
+    {
+      "project": "huatai",
+      "destination": "archive/warehouse_original.py.txt",
+      "status": "historical_source_copy",
+      "source_sha256": "dd60ef04bdbc74de68448e51ac810f833fd68451e410739dbe27e847b27581e6",
+      "packaged_sha256": "594717d1e612b8b86eeeef85386f57cf0b9823cd34ef407681be111600c3cb4b"
+    },
+    {
+      "project": "huatai",
+      "destination": "archive/barra_original.py.txt",
+      "status": "historical_source_copy",
+      "source_sha256": "bab26877cacb29542ab30baa40e0daee2c47fae101a063bf3de7dbb834a9751c",
+      "packaged_sha256": "bab26877cacb29542ab30baa40e0daee2c47fae101a063bf3de7dbb834a9751c"
+    },
+    {
+      "project": "huatai",
+      "destination": "archive/dividend_charts_original.py.txt",
+      "status": "historical_source_copy",
+      "source_sha256": "17d89c298d9d70625303c61c50e114bc12a7a99330ebdeeb3c336ac889d392bf",
+      "packaged_sha256": "6fea295042c50ec56a74e80596262ae4f539b556b3b4ec8360368e96fe76c945"
+    },
+    {
+      "project": "huatai",
+      "destination": "archive/dividend_report_text.txt",
+      "status": "historical_text_extract_unverified_figures",
+      "source_sha256": "7ddcbc7b641dc4d9340d0758caf16254949668233de1d32b67acc0a99c3064bd",
+      "packaged_sha256": "7ddcbc7b641dc4d9340d0758caf16254949668233de1d32b67acc0a99c3064bd"
+    },
+    {
+      "project": "huatai",
+      "destination": "src/dividend_learning.py",
+      "status": "later_synthetic_reconstruction",
+      "source_sha256": "8aa6adb53f0cdb80ab7e4a93402008af51987a1e4b3a3805ce028b0a983994b0",
+      "packaged_sha256": "8aa6adb53f0cdb80ab7e4a93402008af51987a1e4b3a3805ce028b0a983994b0"
+    },
+    {
+      "project": "huatai",
+      "destination": "tutorials/factor_research_tutorial.py",
+      "status": "later_synthetic_tutorial",
+      "source_sha256": "3a06ff763d7cdb9379606850ae6073a2379864e263a4166f96d67525cc836fa0",
+      "packaged_sha256": "3a06ff763d7cdb9379606850ae6073a2379864e263a4166f96d67525cc836fa0"
+    },
+    {
+      "project": "huatai",
+      "destination": "tutorials/量化因子研究完整复习.md",
+      "status": "later_synthetic_tutorial",
+      "source_sha256": "1fe63c9c3e8527b997ad9313bb31b8579e29cc3535836c2a88b4ac5e7100b901",
+      "packaged_sha256": "1fe63c9c3e8527b997ad9313bb31b8579e29cc3535836c2a88b4ac5e7100b901"
+    }
+  ],
+  "note": "Source paths retained locally. Later prose and split wrappers are new. Original author attribution is retained; no license is granted by packaging."
+}

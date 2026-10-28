@@ -1,0 +1,33 @@
+pip install numpy
+# In[]
+
+import pandas as pd
+import numpy as np
+
+# 模拟股票市值数据
+data = {
+    'stock': ['A', 'B', 'C', 'D'],
+    'market_cap': [1e9, 5e9, 1e10, 2e8]
+}
+df = pd.DataFrame(data)
+
+# 计算Size因子
+df['size_factor'] = np.log(df['market_cap'])
+
+# 因子标准化
+df['size_factor_normalized'] = (df['size_factor'] - df['size_factor'].mean()) / df['size_factor'].std()
+
+# 模拟回测
+# 假设每个股票的回报率是随机生成的
+np.random.seed(42)
+df['returns'] = np.random.randn(len(df)) * 0.05
+
+# 按照size因子排序，买入因子最高的股票，卖空因子最低的股票
+df = df.sort_values(by='size_factor_normalized', ascending=False)
+top_stocks = df.head(2)  # 假设买入因子最高的两只股票
+bottom_stocks = df.tail(2)  # 假设卖空因子最低的两只股票
+
+# 计算投资组合的回报
+portfolio_return = top_stocks['returns'].mean() - bottom_stocks['returns'].mean()
+
+print(f"投资组合的预期回报: {portfolio_return:.2%}")
